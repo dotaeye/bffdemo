@@ -1,0 +1,30 @@
+<!-- index.wxml -->
+<view class="container">
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+      获取头像昵称
+    </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view wx:if="{{loading}}">
+    <text>数据正在加载</text>
+  </view>
+  <view class="book-list" wx:else>
+    <view class="book-list-item single">
+      <text>书本ID {{queryResult.bookItem._id}}</text>
+      <text>书本名称 {{queryResult.bookItem.title}}</text>
+    </view>
+    <view class="book-list-item" wx:for="{{queryResult.books}}" wx:key="{{book._id}}" wx:for-item="book">
+      <text>书本ID {{book._id}}</text>
+      <text>书本名称 {{book.title}}</text>
+      <view class="book-chapter-list">
+        <view class="book-chapter-list-item" wx:for="{{book.chapterInfoList}}" wx:key="{{index}}" wx:for-item="chapter">
+          <text>{{chapter.title}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

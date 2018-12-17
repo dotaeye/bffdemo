@@ -1,0 +1,13 @@
+module.exports = `
+  type Reader {
+    _id: ID!
+    name: String!
+    bookId: String!
+    book: Book
+  }
+
+  extend type Query {
+    getReaders: [Reader]
+  }
+
+`

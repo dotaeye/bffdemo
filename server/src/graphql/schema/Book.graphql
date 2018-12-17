@@ -1,0 +1,38 @@
+module.exports = `
+
+  interface Read{
+    title:String!
+  }
+
+  # 书本实体
+  type Book implements Read {
+    _id: ID!
+    title: String!
+    author: String
+    cover: String
+    longIntro: String
+    chapterInfo: ChapterInfo
+    chapterInfoList(first:Int):[Chapter]
+  }
+
+  type ChapterInfo {
+    chapters: [Chapter]
+    chaptersCount: Int
+  }
+
+  type Chapter implements Read {
+    title: String!
+    link: String!
+    unreadble: Boolean
+  }
+
+  extend type Subscription {
+    SearchBookSub: Book
+  }
+
+  extend type Query {
+    getBookById(id: ID!): Book
+    searchBook(keyword:String ,showChapter:Boolean, skipChapterList:Boolean): [Book]
+  }
+
+`
