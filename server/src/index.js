@@ -64,10 +64,19 @@ const server = new GraphQLServer({
 const options = {
   playground: '/',
   validationRules: [depthLimit(5)],
-  formatResponse: gqlResponse => {
+  formatError: err => {
+    const { name } = err.originalError
+    console.log('formatError')
     return {
-      ...gqlResponse,
-      code: gqlResponse.errors && gqlResponse.errors.length > 0 ? 200 : 0,
+      ...err,
+      noAuth: name === 'AuthorizationError'
+    }
+  },
+  formatResponse: res => {
+    console.log('formatResponse')
+    return {
+      ...res,
+      code: res.errors && res.errors.length > 0 ? 200 : 0,
       message: '',
       now: Date.now()
     }
