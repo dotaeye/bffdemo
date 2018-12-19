@@ -6,7 +6,8 @@ export class AuthorizationError extends Error {
 }
 
 export const isAuthenticated = (root, args, context, info) => {
-  if (!context.user) {
-    return new AuthorizationError('Not authenticated')
-  }
+  // return true
+  // if (!context.user) {
+  //   return new AuthorizationError('Not authenticated')
+  // }
 }
