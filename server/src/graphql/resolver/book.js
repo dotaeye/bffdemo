@@ -1,8 +1,8 @@
 import { combineResolvers } from 'graphql-resolvers'
 import { isAuthenticated } from '../filter'
-function FakeRequest(data) {
+function FakeRequest(data, delay) {
   return new Promise(resolve => {
-    setTimeout(() => resolve(data), 1000)
+    setTimeout(() => resolve(data), delay || 1000)
   })
 }
 
@@ -42,6 +42,7 @@ module.exports = {
       return root.longIntro || root.shortIntro
     },
     chapterInfo: async (root, data, { services: { BookService }, user }) => {
+      await FakeRequest(1, 5000)
       return await BookService.getChapterInfo(root._id)
     },
     chapterInfoList: async (
