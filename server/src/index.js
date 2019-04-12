@@ -2,6 +2,7 @@ import { GraphQLServer, PubSub } from 'graphql-yoga'
 import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
 import queryComplexity, { simpleEstimator } from 'graphql-query-complexity'
+import { express as expressVoyager } from 'graphql-voyager/middleware'
 import depthLimit from 'graphql-depth-limit'
 import config from './config'
 import { typeDefs, resolvers } from './graphql'
@@ -83,6 +84,8 @@ const options = {
   },
   port
 }
+
+server.express.use('/voyager', expressVoyager({ endpointUrl: '/' }))
 
 server.start(options, () => {
   console.log(

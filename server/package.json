@@ -19,6 +19,7 @@
     "graphql-resolvers": "^0.2.2",
     "graphql-type-json": "^0.2.1",
     "graphql-validation-complexity": "^0.2.4",
+    "graphql-voyager": "^1.0.0-rc.26",
     "graphql-yoga": "^1.16.7",
     "install": "^0.12.2",
     "jsonwebtoken": "^8.2.1",
