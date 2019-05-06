@@ -66,11 +66,11 @@ const options = {
   playground: '/',
   validationRules: [depthLimit(5)],
   formatError: err => {
-    const { name } = err.originalError
+    const originalError = (err && err.originalError) || {}
     console.log('formatError')
     return {
       ...err,
-      noAuth: name === 'AuthorizationError'
+      noAuth: originalError.name === 'AuthorizationError'
     }
   },
   formatResponse: res => {

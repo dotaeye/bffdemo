@@ -31,6 +31,7 @@ module.exports = `
   }
 
   extend type Query {
+    getReadById(id: ID!): Read
     getBookById(id: ID!): Book
     searchBook(keyword:String): [Book]
   }

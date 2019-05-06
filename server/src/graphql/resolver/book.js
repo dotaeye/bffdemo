@@ -8,6 +8,15 @@ function FakeRequest(data, delay) {
 
 module.exports = {
   Query: {
+    getReadById: combineResolvers(
+      isAuthenticated,
+      async (root, { id }, { services: { BookService }, user }) => {
+        if (id === 'error_id') {
+          throw new Error('错误的id')
+        }
+        return await BookService.getBookById(id)
+      }
+    ),
     getBookById: combineResolvers(
       isAuthenticated,
       async (root, { id }, { services: { BookService }, user }) => {
@@ -52,6 +61,19 @@ module.exports = {
     ) => {
       const chapterResult = await BookService.getChapterInfo(root._id)
       return chapterResult.chapters.splice(0, first)
+    }
+  },
+  Read: {
+    __resolveType(root, context, info) {
+      if (root.author) {
+        return 'Book'
+      }
+
+      if (root.link) {
+        return 'Chapter'
+      }
+
+      return null
     }
   }
 }
