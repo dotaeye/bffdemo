@@ -1,6 +1,8 @@
 import { GraphQLServer, PubSub } from 'graphql-yoga'
 import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
+import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools'
+import Mock from 'mockjs'
 import queryComplexity, { simpleEstimator } from 'graphql-query-complexity'
 import { express as expressVoyager } from 'graphql-voyager/middleware'
 import depthLimit from 'graphql-depth-limit'
@@ -30,9 +32,24 @@ const complexityRule = queryComplexity({
   ]
 })
 
-const server = new GraphQLServer({
+const schema = makeExecutableSchema({
   typeDefs,
-  resolvers,
+  resolvers
+})
+
+const Random = Mock.Random
+const min = 100
+const max = 99999
+const mocks = {
+  Int: () => Random.natural(min, max),
+  Float: () => Random.float(min, max),
+  String: () => Random.ctitle(10, 5),
+  Date: () => Random.time()
+}
+addMockFunctionsToSchema({ schema, mocks, preserveResolvers: true })
+
+const server = new GraphQLServer({
+  schema,
   context: req => {
     let user = null
     if (req.request) {

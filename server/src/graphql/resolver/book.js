@@ -47,12 +47,11 @@ module.exports = {
     }
   },
   Book: {
+    chapterInfo: async (root, data, { services: { BookService }, user }) => {
+      return await BookService.getChapterInfo(root._id)
+    },
     longIntro: async (root, data, context) => {
       return root.longIntro || root.shortIntro
-    },
-    chapterInfo: async (root, data, { services: { BookService }, user }) => {
-      await FakeRequest(1, 5000)
-      return await BookService.getChapterInfo(root._id)
     },
     chapterInfoList: async (
       root,

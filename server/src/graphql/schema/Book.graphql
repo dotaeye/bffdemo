@@ -11,6 +11,7 @@ module.exports = `
     author: String
     cover: String
     longIntro: String
+    price:Float
     chapterInfo: ChapterInfo
     chapterInfoList(first:Int):[Chapter]
   }
